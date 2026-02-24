@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { ExampleApp } from './ExampleApp';
 
-const APP_ELEMENT = document.getElementById('app')!;
-const render = (Component: React.ComponentClass<any>) => {
-  ReactDOM.render(<Component />, APP_ELEMENT);
-};
-
-render(ExampleApp);
+const APP_ELEMENT = document.getElementById('app');
+if (APP_ELEMENT) {
+  createRoot(APP_ELEMENT).render(<ExampleApp />);
+}

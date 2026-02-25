@@ -12,5 +12,5 @@ export const DEFAULT_CONTROLS_WITH_CREATION = React.Children.toArray([
 ]);
 export const DEFAULT_CONTROLS_WITHOUT_CREATION = React.Children.toArray([
   <ExpandButton key="expand" />,
-  <RemoveButton key="remove" />
+  <RemoveButton key="remove" />,
 ]);

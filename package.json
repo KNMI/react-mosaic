@@ -38,7 +38,8 @@
     "fix": "npm-run-all -lp fix:**",
     "fix:format": "yarn run prettier:run --write",
     "fix:lint": "yarn run test:lint --fix",
-    "version": "npm-run-all test bundle && git add -A docs/"
+    "version": "npm-run-all test bundle && git add -A docs/",
+    "prepare": "yarn run build"
   },
   "dependencies": {
     "classnames": "^2.3.2",

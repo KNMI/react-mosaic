@@ -44,7 +44,7 @@ export const THEMES = {
 
 export type Theme = keyof typeof THEMES;
 
-const additionalControls = React.Children.toArray([<CloseAdditionalControlsButton />]);
+const additionalControls = React.Children.toArray([<CloseAdditionalControlsButton key={'key'} />]);
 
 const EMPTY_ARRAY: any[] = [];
 
@@ -161,7 +161,7 @@ export class ExampleApp extends React.PureComponent<{}, ExampleAppState> {
               value={this.state.currentTheme}
               onChange={(e) => this.setState({ currentTheme: e.currentTarget.value as Theme })}
             >
-              {React.Children.toArray(Object.keys(THEMES).map((label) => <option>{label}</option>))}
+              {React.Children.toArray(Object.keys(THEMES).map((label) => <option key={label}>{label}</option>))}
             </HTMLSelect>
           </label>
           <div className="navbar-separator" />

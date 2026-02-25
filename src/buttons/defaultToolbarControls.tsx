@@ -5,9 +5,12 @@ import { ReplaceButton } from './ReplaceButton';
 import { SplitButton } from './SplitButton';
 
 export const DEFAULT_CONTROLS_WITH_CREATION = React.Children.toArray([
-  <ReplaceButton />,
-  <SplitButton />,
-  <ExpandButton />,
-  <RemoveButton />,
+  <ReplaceButton key="replace" />,
+  <SplitButton key="split" />,
+  <ExpandButton key="expand" />,
+  <RemoveButton key="remove" />,
 ]);
-export const DEFAULT_CONTROLS_WITHOUT_CREATION = React.Children.toArray([<ExpandButton />, <RemoveButton />]);
+export const DEFAULT_CONTROLS_WITHOUT_CREATION = React.Children.toArray([
+  <ExpandButton key="expand" />,
+  <RemoveButton key="remove" />
+]);

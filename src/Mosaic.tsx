@@ -4,7 +4,7 @@ import countBy from 'lodash/countBy';
 import keys from 'lodash/keys';
 import pickBy from 'lodash/pickBy';
 import { HTML5toTouch } from 'rdndmb-html5-to-touch';
-import React from 'react';
+import React, { JSX } from 'react';
 import { DndProvider } from 'react-dnd';
 import { MultiBackend } from 'react-dnd-multi-backend';
 import { v4 as uuid } from 'uuid';

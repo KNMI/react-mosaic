@@ -1,5 +1,5 @@
 import flatten from 'lodash/flatten';
-import React from 'react';
+import React, { JSX } from 'react';
 import { MosaicContext } from './contextTypes';
 import { Split } from './Split';
 import { MosaicBranch, MosaicDirection, MosaicKey, MosaicNode, ResizeOptions, TileRenderer } from './types';

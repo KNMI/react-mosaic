@@ -4,7 +4,7 @@ import dropRight from 'lodash/dropRight';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import values from 'lodash/values';
-import React, { useContext } from 'react';
+import React, { JSX, useContext } from 'react';
 import {
   ConnectDragPreview,
   ConnectDragSource,
@@ -104,31 +104,32 @@ export class InternalMosaicWindow<T extends MosaicKey> extends React.Component<
 
     return (
       <MosaicWindowContext.Provider value={this.childContext}>
-        {connectDropTarget(
-          <div
-            className={classNames('mosaic-window mosaic-drop-target', className, {
-              'drop-target-hover': isOver && draggedMosaicId === this.context.mosaicId,
-              'additional-controls-open': this.state.additionalControlsOpen,
-            })}
-            ref={(element) => (this.rootElement = element)}
-          >
-            {this.renderToolbar()}
-            <div className="mosaic-window-body">{this.props.children}</div>
-            {!disableAdditionalControlsOverlay && (
-              <div
-                className="mosaic-window-body-overlay"
-                onClick={() => {
-                  this.setAdditionalControlsOpen(false);
-                }}
-              />
-            )}
-            <div className="mosaic-window-additional-actions-bar">{additionalControls}</div>
-            {connectDragPreview(renderPreview!(this.props))}
-            <div className="drop-target-container">
-              {values<MosaicDropTargetPosition>(MosaicDropTargetPosition).map(this.renderDropTarget)}
-            </div>
-          </div>,
-        )}
+        <div
+          className={classNames('mosaic-window mosaic-drop-target', className, {
+            'drop-target-hover': isOver && draggedMosaicId === this.context.mosaicId,
+            'additional-controls-open': this.state.additionalControlsOpen,
+          })}
+          ref={(element) => {
+            this.rootElement = element;
+            connectDropTarget(element);
+          }}
+        >
+          {this.renderToolbar()}
+          <div className="mosaic-window-body">{this.props.children}</div>
+          {!disableAdditionalControlsOverlay && (
+            <div
+              className="mosaic-window-body-overlay"
+              onClick={() => {
+                this.setAdditionalControlsOpen(false);
+              }}
+            />
+          )}
+          <div className="mosaic-window-additional-actions-bar">{additionalControls}</div>
+          <div ref={(element) => connectDragPreview(element) as any}>{renderPreview!(this.props)}</div>
+          <div className="drop-target-container">
+            {values<MosaicDropTargetPosition>(MosaicDropTargetPosition).map(this.renderDropTarget)}
+          </div>
+        </div>
       </MosaicWindowContext.Provider>
     );
   }
@@ -145,26 +146,38 @@ export class InternalMosaicWindow<T extends MosaicKey> extends React.Component<
   }
 
   private renderToolbar() {
-    const { title, draggable, additionalControls, additionalControlButtonText, path, renderToolbar } = this.props;
+    const {
+      title,
+      draggable,
+      additionalControls,
+      additionalControlButtonText,
+      path,
+      renderToolbar,
+      connectDragSource,
+    } = this.props;
     const { additionalControlsOpen } = this.state;
     const toolbarControls = this.getToolbarControls();
     const draggableAndNotRoot = draggable && path.length > 0;
-    const connectIfDraggable = draggableAndNotRoot ? this.props.connectDragSource : (el: React.ReactElement) => el;
 
     if (renderToolbar) {
-      const connectedToolbar = connectIfDraggable(renderToolbar(this.props, draggable)) as React.ReactElement<any>;
       return (
         <div className={classNames('mosaic-window-toolbar', { draggable: draggableAndNotRoot })}>
-          {connectedToolbar}
+          <div ref={draggableAndNotRoot ? (el) => connectDragSource(el) as any : undefined}>
+            {renderToolbar(this.props, draggable)}
+          </div>
         </div>
       );
     }
 
-    const titleDiv = connectIfDraggable(
-      <div title={title} className="mosaic-window-title">
+    const titleDiv = (
+      <div
+        title={title}
+        className="mosaic-window-title"
+        ref={draggableAndNotRoot ? (el) => connectDragSource(el) as any : undefined}
+      >
         {title}
-      </div>,
-    )!;
+      </div>
+    );
 
     const hasAdditionalControls = !isEmpty(additionalControls);
 
@@ -241,6 +254,8 @@ export class InternalMosaicWindow<T extends MosaicKey> extends React.Component<
 
   private connectDragSource = (connectedElements: React.ReactElement<any>) => {
     const { connectDragSource } = this.props;
+    // In React 19, element.ref is removed. Pass through for backward compat
+    // but prefer using callback refs directly.
     return connectDragSource(connectedElements);
   };
 

@@ -2,7 +2,10 @@
   "compilerOptions": {
     "noEmit": false,
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "module": "es6",
+    "target": "es2015",
+    "moduleResolution": "node"
   },
   "exclude": [
     "demo",

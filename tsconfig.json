@@ -6,7 +6,12 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["dom", "es5", "scripthost", "es2015.promise"],
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015.promise"
+    ],
     "moduleResolution": "node",
     "module": "commonjs",
     "noEmit": true,
@@ -19,5 +24,9 @@
     "sourceMap": true,
     "strict": true
   },
-  "exclude": ["docs", "lib", "node_modules"],
+  "exclude": [
+    "docs",
+    "lib",
+    "node_modules"
+  ],
 }

@@ -1,4 +1,5 @@
 import { Spec } from 'immutability-helper';
+import { JSX } from 'react';
 
 /**
  * Valid node types

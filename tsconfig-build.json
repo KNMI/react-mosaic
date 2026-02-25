@@ -3,7 +3,7 @@
     "noEmit": false,
     "outDir": "lib",
     "rootDir": "src",
-    "module": "es6",
+    "module": "commonjs",
     "target": "es2015",
     "moduleResolution": "node"
   },

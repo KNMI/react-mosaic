@@ -29,7 +29,7 @@ export function MosaicDropTarget({ path, position }: MosaicDropTargetProps) {
   });
   return (
     <div
-      ref={connectDropTarget as any}
+      ref={connectDropTarget as unknown as React.Ref<HTMLDivElement> | undefined}
       className={classNames('drop-target', position, {
         'drop-target-hover': isOver && draggedMosaicId === mosaicId,
       })}

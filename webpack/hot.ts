@@ -18,6 +18,11 @@ const hotConfig: webpack.Configuration = {
     hot: true,
     host: '0.0.0.0',
     port: CONSTANTS.DEV_SERVER_PORT,
+
+    client: {
+      // Disable overlay for showing the blueprintjs errors of not supporting React 19
+      overlay: false,
+    },
   },
   plugins: [...(config.plugins || []), new ReactRefreshWebpackPlugin()],
 };
